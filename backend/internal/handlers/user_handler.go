@@ -5,9 +5,10 @@ import (
 	"net/http"
 	"time"
 
+	"flowtaks/internal/config"
+	"flowtaks/internal/models"
+
 	"github.com/gin-gonic/gin"
-	"github.com/username/project-name/internal/config"
-	"github.com/username/project-name/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

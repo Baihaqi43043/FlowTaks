@@ -3,16 +3,18 @@ package main
 import (
 	"log"
 
+	"flowtaks/internal/config"
+	"flowtaks/internal/handlers"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/username/project-name/internal/config"
-	"github.com/username/project-name/internal/handlers"
 )
 
 func main() {
 	// Inisialisasi koneksi database
-	config.ConnectDB()
-
+	if err := config.ConnectDB(); err != nil {
+		log.Fatal("Failed to connect to database: ", err)
+	}
 	r := gin.Default()
 
 	// Konfigurasi CORS
@@ -30,9 +32,11 @@ func main() {
 		})
 	})
 
-	// Route user
+	// Auth routes
 	api := r.Group("/api")
 	{
+		api.POST("/register", handlers.Register)
+		api.POST("/login", handlers.Login)
 		api.POST("/users", handlers.CreateUser)
 		api.GET("/users", handlers.GetUsers)
 	}
